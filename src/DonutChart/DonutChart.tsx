@@ -22,6 +22,15 @@ const DonutChart = ({
   const [lineOffsets, setLineOffsets] = useState<DOMRect[]>([]);
 
   const percentages = data.map((x) => x.percent);
+  const totalPercentage = percentages.reduce((a, b) => a + b, 0);
+
+  const segmentLabelRotations = percentages.map(
+    (x, i) =>
+      (percentages.slice(0, i).reduce((a, b) => a + b, 0) +
+        percentages[i] / 2) /
+        -100 -
+      0.125
+  );
 
   useEffect(() => {
     const x = data.map((x, index) => {
@@ -34,7 +43,6 @@ const DonutChart = ({
     setLineOffsets(x);
   }, [data]);
 
-  const totalPercentage = percentages.reduce((a, b) => a + b, 0);
   if (totalPercentage !== 100) {
     return (
       <p>
@@ -43,6 +51,7 @@ const DonutChart = ({
       </p>
     );
   }
+  
   return (
     data && (
       <svg viewBox={"0 0 " + viewBox + " " + viewBox}>
@@ -57,15 +66,10 @@ const DonutChart = ({
             ></path>
             <g
               style={{
+                // Counteract rotation of <text/>
                 transformBox: "fill-box",
                 transformOrigin: "center",
-                rotate: `${
-                  -1 *
-                  ((percentages.slice(0, index).reduce((a, b) => a + b, 0) +
-                    percentages[index] / 2) /
-                    -100 -
-                    0.125)
-                }turn`,
+                rotate: `${-1 * segmentLabelRotations[index]}turn`,
               }}
             >
               <circle
@@ -74,12 +78,7 @@ const DonutChart = ({
                 fill="#990000"
                 r={5}
                 style={{
-                  rotate: `${
-                    (percentages.slice(0, index).reduce((a, b) => a + b, 0) +
-                      percentages[index] / 2) /
-                      -100 -
-                    0.125
-                  }turn`,
+                  rotate: `${segmentLabelRotations[index]}turn`,
                   translate: "50% 50%",
                 }}
               />
@@ -91,15 +90,11 @@ const DonutChart = ({
                 x={40}
                 y={40}
                 style={{
-                  rotate: `${
-                    (percentages.slice(0, index).reduce((a, b) => a + b, 0) +
-                      percentages[index] / 2) /
-                      -100 -
-                    0.125
-                  }turn`,
+                  rotate: `${segmentLabelRotations[index]}turn`,
                   translate: "50% 50%",
                 }}
               >
+                {/** Placeholder value */}
                 {String.fromCharCode(index + 65)}
               </text>
             </g>
@@ -111,12 +106,7 @@ const DonutChart = ({
                 x2={37.5}
                 y2={37.5}
                 style={{
-                  rotate: `${
-                    (percentages.slice(0, index).reduce((a, b) => a + b, 0) +
-                      percentages[index] / 2) /
-                      -100 -
-                    0.125
-                  }turn`,
+                  rotate: `${segmentLabelRotations[index]}turn`,
                   translate: "50% 50%",
                 }}
                 stroke="#990000"

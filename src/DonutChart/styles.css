@@ -14,7 +14,6 @@ html {
   box-sizing: border-box;
 }
 
-
 svg {
   overflow: visible;
   transform-origin: center;
@@ -32,24 +31,3 @@ path {
 path:hover {
   opacity: 1;
 }
-
-p {
-  text-align: center;
-  width: 100%;
-}
-
-.label {
-  width: 20px;
-  height: 20px;
-  background-color: red;
-}
-
-.segment {
-  x: 5px;
-  y: 5px;
-  width: calc(50% - 10px);
-  height: calc(50% - 10px);
-}
-
-
-
