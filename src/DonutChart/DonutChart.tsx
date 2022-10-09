@@ -75,8 +75,8 @@ const DonutChart = ({
             >
               <text
                 fontSize={6}
-                x={50}
-                y={50}
+                x={40}
+                y={40}
                 style={{
                   rotate: `${
                     (percentages.slice(0, index).reduce((a, b) => a + b, 0) +
@@ -86,7 +86,6 @@ const DonutChart = ({
                   }turn`,
                   translate: "50% 50%",
                 }}
-                transform="rotate(0 10 10)"
               >
                 {String.fromCharCode(index + 65)}
               </text>
@@ -96,8 +95,8 @@ const DonutChart = ({
               <line
                 x1={25}
                 y1={25}
-                x2={50}
-                y2={50}
+                x2={40}
+                y2={40}
                 style={{
                   rotate: `${
                     (percentages.slice(0, index).reduce((a, b) => a + b, 0) +

@@ -41,20 +41,20 @@ class CalculusHelper {
       const innerRadius = this.radius - this.borderSize;
   
       const commands: string[] = [];
-      commands.push(`M ${this.viewBox / 2 + this.radius} ${this.viewBox / 2 }`);
+      commands.push(`M ${this.viewBox / 2 + this.radius - 1} ${this.viewBox / 2 -1 }`);
       commands.push(
-        `A ${this.radius} ${this.radius} 0 ${longPathFlag} 0 ${this.getCoordFromDegrees(
-          degrees,
-          this.radius,
+        `A ${this.radius- 1} ${this.radius-1} 0 ${longPathFlag} 0 ${this.getCoordFromDegrees(
+          degrees-1,
+          this.radius-1,
         )}`
       );
       commands.push(
-        `L ${this.getCoordFromDegrees(degrees, innerRadius)}`
+        `L ${this.getCoordFromDegrees(degrees-1, innerRadius-1)}`
       );
       commands.push(
-        `A ${innerRadius} ${innerRadius} 0 ${longPathFlag} 1 ${
-            this.viewBox / 2 + innerRadius
-        } ${this.viewBox / 2 }`
+        `A ${innerRadius-1} ${innerRadius-1} 0 ${longPathFlag} 1 ${
+            this.viewBox / 2 + innerRadius -1
+        } ${this.viewBox / 2 -1}`
       );
       return commands.join(' ');
     }
