@@ -1,15 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import CalculusHelper from "../calculation/CalculusHelper";
 import "./styles.css";
-const getOffset = (percent: number, viewBox: number) => {
-  return Math.round((viewBox * percent) / 100);
-};
+
 export interface DonutSlice {
   id: number;
   percent: number;
-  color: string;
-  label?: string;
-  onClickCb?: () => void;
 }
 
 const DonutChart = ({
@@ -27,39 +22,39 @@ const DonutChart = ({
   const [lineOffsets, setLineOffsets] = useState<DOMRect[]>([]);
 
   const percentages = data.map((x) => x.percent);
-  console.log(data, percentages);
-  console.log(
-    lineOffsets.map((off) => {
-      return { x: (off.x + off.width) / 2, y: (off.y + off.height) / 2 };
-    }),
-    lineOffsets
-  );
+
   useEffect(() => {
     const x = data.map((x, index) => {
       const path = document.getElementById(
         `path-${index}`
       ) as unknown as SVGPathElement;
-      console.log(index, path.getBBox());
 
-      return path.getBBox();
+      return path?.getBBox();
     }) as DOMRect[];
     setLineOffsets(x);
   }, [data]);
 
+  const totalPercentage = percentages.reduce((a, b) => a + b, 0);
+  if (totalPercentage !== 100) {
+    return (
+      <p>
+        Error rendering chart. Expected sum of percentages to equal 100, got{" "}
+        {totalPercentage} instead.
+      </p>
+    );
+  }
   return (
     data && (
       <svg viewBox={"0 0 " + viewBox + " " + viewBox}>
         {helper.getSlicesWithCommandsAndOffsets().map((slice, index) => (
-          <>
+          <g key={data[index].id}>
             <path
               key={index}
-              fill={slice.color}
+              fill="#e83d13"
               d={slice.commands}
               transform={"rotate(" + slice.offset + ")"}
               id={`path-${index}`}
-            >
-              <title>{slice.label}</title>
-            </path>
+            ></path>
             <g
               style={{
                 transformBox: "fill-box",
@@ -73,8 +68,26 @@ const DonutChart = ({
                 }turn`,
               }}
             >
+              <circle
+                cx={40}
+                cy={40}
+                fill="#990000"
+                r={5}
+                style={{
+                  rotate: `${
+                    (percentages.slice(0, index).reduce((a, b) => a + b, 0) +
+                      percentages[index] / 2) /
+                      -100 -
+                    0.125
+                  }turn`,
+                  translate: "50% 50%",
+                }}
+              />
               <text
-                fontSize={6}
+                fontSize={5}
+                alignmentBaseline="middle"
+                textAnchor="middle"
+                fill="white"
                 x={40}
                 y={40}
                 style={{
@@ -95,8 +108,8 @@ const DonutChart = ({
               <line
                 x1={25}
                 y1={25}
-                x2={40}
-                y2={40}
+                x2={37.5}
+                y2={37.5}
                 style={{
                   rotate: `${
                     (percentages.slice(0, index).reduce((a, b) => a + b, 0) +
@@ -106,11 +119,11 @@ const DonutChart = ({
                   }turn`,
                   translate: "50% 50%",
                 }}
-                stroke="rgb(255,0,0)"
-                strokeWidth={1.5}
+                stroke="#990000"
+                strokeWidth={0.5}
               />
             )}
-          </>
+          </g>
         ))}
       </svg>
     )
