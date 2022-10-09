@@ -1,60 +1,100 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import "./App.css";
 import DonutChart from "./DonutChart";
-import { DonutSlice } from "./DonutChart/DonutChart";
 
-const FAKE_DATA = [
+const FAKE_DATA_ONE = [
   {
     id: 1,
     percent: 35,
-    color: 'DarkSeaGreen',
-    label: 'Slice 1',
   },
   {
     id: 2,
     percent: 10,
-    color: 'DarkOrchid',
-    label: 'Slice 2',
   },
   {
     id: 3,
     percent: 10,
-    color: 'DodgerBlue',
-    label: 'Slice 3',
   },
   {
     id: 4,
     percent: 10,
-    color: 'Black',
-    label: 'Slice 1',
   },
   {
     id: 5,
     percent: 10,
-    color: 'Red',
-    label: 'Slice 1',
   },
   {
     id: 6,
     percent: 25,
-    color: 'Yellow',
-    label: 'Slice 1',
+  },
+];
+
+const FAKE_DATA_TWO = [
+  {
+    id: 1,
+    percent: 10,
+  },
+  {
+    id: 2,
+    percent: 20,
+  },
+  {
+    id: 3,
+    percent: 15,
+  },
+  {
+    id: 4,
+    percent: 30,
+  },
+  {
+    id: 5,
+    percent: 10,
+  },
+  {
+    id: 6,
+    percent: 15,
+  },
+];
+
+const FAKE_DATA_THREE = [
+  {
+    id: 1,
+    percent: 30,
+  },
+  {
+    id: 2,
+    percent: 30,
+  },
+  {
+    id: 3,
+    percent: 40,
   },
 ];
 
 function App() {
-
-
-
   return (
-    <div>
-    <DonutChart
-      viewBox={100}
-      radius={40}
-      borderSize={20}
-      data={FAKE_DATA}
-    />
-  </div>
+    <div style={{ display: "flex", flexDirection: "row", gap: 125 }}>
+      <DonutChart
+        viewBox={100}
+        radius={40}
+        borderSize={17.5}
+        data={FAKE_DATA_ONE}
+      />
+
+      <DonutChart
+        viewBox={100}
+        radius={40}
+        borderSize={17.5}
+        data={FAKE_DATA_TWO}
+      />
+
+      <DonutChart
+        viewBox={100}
+        radius={40}
+        borderSize={17.5}
+        data={FAKE_DATA_THREE}
+      />
+    </div>
   );
 }
 
