@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import "./App.css";
 import DonutChart from "./DonutChart";
 
 const FAKE_DATA_ONE = [
