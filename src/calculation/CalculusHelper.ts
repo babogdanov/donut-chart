@@ -1,3 +1,5 @@
+/* Calculations source: https://dev.to/mustapha/how-to-create-an-interactive-svg-donut-chart-using-angular-19eo */
+
 import { DonutSlice } from "../DonutChart/DonutChart";
 
 interface DonutSliceWithCommands extends DonutSlice {
