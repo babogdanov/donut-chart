@@ -60,24 +60,38 @@ const DonutChart = ({
             >
               <title>{slice.label}</title>
             </path>
-            <text
-              fontSize={6}
-              x={50}
-              y={50}
+            <g
               style={{
+                transformBox: "fill-box",
+                transformOrigin: "center",
                 rotate: `${
-                  (percentages.slice(0, index).reduce((a, b) => a + b, 0) +
+                  -1 *
+                  ((percentages.slice(0, index).reduce((a, b) => a + b, 0) +
                     percentages[index] / 2) /
                     -100 -
-                  0.125
+                    0.125)
                 }turn`,
-                translate: "50% 50%",
-                
               }}
-              transform="rotate(0.5turn)"
             >
-              {String.fromCharCode(index + 65)}
-            </text>
+              <text
+                fontSize={6}
+                x={50}
+                y={50}
+                style={{
+                  rotate: `${
+                    (percentages.slice(0, index).reduce((a, b) => a + b, 0) +
+                      percentages[index] / 2) /
+                      -100 -
+                    0.125
+                  }turn`,
+                  translate: "50% 50%",
+                }}
+                transform="rotate(0 10 10)"
+              >
+                {String.fromCharCode(index + 65)}
+              </text>
+            </g>
+
             {lineOffsets?.length > 0 && percentages?.length > 0 && (
               <line
                 x1={25}
@@ -92,8 +106,6 @@ const DonutChart = ({
                     0.125
                   }turn`,
                   translate: "50% 50%",
-                
-
                 }}
                 stroke="rgb(255,0,0)"
                 strokeWidth={1.5}
