@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import CalculusHelper from "../calculation/CalculusHelper";
 import "./styles.css";
 
@@ -19,7 +18,6 @@ const DonutChart = ({
   borderSize: number;
 }) => {
   const helper = new CalculusHelper(data, radius, viewBox, borderSize);
-  const [lineOffsets, setLineOffsets] = useState<DOMRect[]>([]);
 
   const percentages = data.map((x) => x.percent);
   const totalPercentage = percentages.reduce((a, b) => a + b, 0);
@@ -32,17 +30,6 @@ const DonutChart = ({
       0.125
   );
 
-  useEffect(() => {
-    const x = data.map((x, index) => {
-      const path = document.getElementById(
-        `path-${index}`
-      ) as unknown as SVGPathElement;
-
-      return path?.getBBox();
-    }) as DOMRect[];
-    setLineOffsets(x);
-  }, [data]);
-
   if (totalPercentage !== 100) {
     return (
       <p>
@@ -51,7 +38,6 @@ const DonutChart = ({
       </p>
     );
   }
-  
   return (
     data && (
       <svg viewBox={"0 0 " + viewBox + " " + viewBox}>
@@ -99,20 +85,18 @@ const DonutChart = ({
               </text>
             </g>
 
-            {lineOffsets?.length > 0 && percentages?.length > 0 && (
-              <line
-                x1={25}
-                y1={25}
-                x2={37.5}
-                y2={37.5}
-                style={{
-                  rotate: `${segmentLabelRotations[index]}turn`,
-                  translate: "50% 50%",
-                }}
-                stroke="#990000"
-                strokeWidth={0.5}
-              />
-            )}
+            <line
+              x1={25}
+              y1={25}
+              x2={37.5}
+              y2={37.5}
+              style={{
+                rotate: `${segmentLabelRotations[index]}turn`,
+                translate: "50% 50%",
+              }}
+              stroke="#990000"
+              strokeWidth={0.5}
+            />
           </g>
         ))}
       </svg>
